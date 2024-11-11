@@ -7,7 +7,7 @@
 - ⚡️ Async/await based implementation
 - 🔄 Configurable periodic execution
 - ⏱ Dynamic interval adjustment
-- 🔢 Adjustable execution count (including infinite)
+- 🔢 Adjustable execution count (including infinite using `Int.infinity`)
 - ⏯ Skip initial delay option
 - 🎮 Full control over timer lifecycle
 - 🧑‍💻 Simple and intuitive API
@@ -26,7 +26,7 @@
 Add the following line to your `Package.swift` file's dependencies:
 
 ```swift
-.package(url: "https://github.com/YourUsername/AsyncTimer.git", from: "1.0.0")
+.package(url: "https://github.com/takaf51/AsyncTimer.git", from: "1.0.0")
 ```
 
 ## Usage
@@ -34,8 +34,13 @@ Add the following line to your `Package.swift` file's dependencies:
 ### Basic Usage
 
 ```swift
-// Create a timer that executes every 2 seconds
+// Create a timer that executes every 2 seconds infinitely
 let timer = Task.timer(interval: 2.0) { count in
+    print("Timer fired: \(count)")
+}
+
+// Create a timer that executes 5 times
+let finiteTimer = Task.timer(interval: 2.0, count: 5) { count in
     print("Timer fired: \(count)")
 }
 
@@ -95,7 +100,7 @@ timer.updateCount(10)      // Changes to 10 executions
 ```swift
 init(
     interval: Double,
-    count: Double = .infinity,
+    count: Int = .infinity,
     skipInitialDelay: Bool = false,
     action: @escaping (Int) -> Void
 )
@@ -104,7 +109,6 @@ init(
 ### Properties
 
 - `isRunning: Bool` - Indicates if the timer is currently active
-- `currentCount: Int` - Current execution count
 
 ### Methods
 
@@ -113,8 +117,12 @@ init(
 - `reset()` - Resets the execution count
 - `restart()` - Combines reset and start operations
 - `updateInterval(_ newInterval: Double)` - Updates the timer interval
-- `updateCount(_ newCount: Double)` - Updates the total execution count
+- `updateCount(_ newCount: Int)` - Updates the total execution count
 
 ## License
 
 AsyncTimer is available under the MIT license. See the LICENSE file for more info.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
