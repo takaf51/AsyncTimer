@@ -1,4 +1,3 @@
-// Int の拡張で無限大を表現
 extension Int {
     static let infinity = Int.max
 }
