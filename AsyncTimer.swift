@@ -1,8 +1,13 @@
+// Int の拡張で無限大を表現
+extension Int {
+    static let infinity = Int.max
+}
+
 final class AsyncTimer {
     private var task: Task<Void, Never>?
     private var currentCount: Int = 0
     private var interval: Double
-    private var count: Double
+    private var count: Int
     private let skipInitialDelay: Bool
     private let action: (Int) -> Void
     
@@ -10,7 +15,7 @@ final class AsyncTimer {
     
     init(
         interval: Double,
-        count: Double = .infinity,
+        count: Int = .infinity,
         skipInitialDelay: Bool = false,
         action: @escaping (Int) -> Void
     ) {
@@ -24,7 +29,7 @@ final class AsyncTimer {
         guard task == nil else { return }
         
         task = Task {
-            while Double(currentCount) < count {
+            while currentCount < count {
                 if !skipInitialDelay || currentCount > 0 {
                     do {
                         try await Task<Never, Never>.sleep(for: .seconds(interval))
@@ -63,10 +68,10 @@ final class AsyncTimer {
         }
     }
     
-    func updateCount(_ newCount: Double) {
+    func updateCount(_ newCount: Int) {
         guard newCount > 0 else { return }
         count = newCount
-        if isRunning && Double(currentCount) >= count {
+        if isRunning && currentCount >= count {
             stop()
         }
     }
@@ -79,7 +84,7 @@ final class AsyncTimer {
 extension Task where Success == Void, Failure == Never {
     static func timer(
         interval: Double,
-        count: Double = .infinity,
+        count: Int = .infinity,
         skipInitialDelay: Bool = false,
         action: @escaping (Int) -> Void
     ) -> AsyncTimer {
