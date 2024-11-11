@@ -13,13 +13,18 @@ class
 ## Asynctimer
 ```func start()```
     start timer
+    
 ```func stop()```
     stop timer
+    
 ```func reset()```
     reset timer
+    
 ```func restart()```
     restart timer
+    
 ```func updateInterval(_ newInterval: Double)```
     assign new interval
+    
 ```func updateCount(_ newCount: Double)```
     assign new count
